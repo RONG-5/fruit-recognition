@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水果识别器 - 全泳涛</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(145deg, #f8f0e7 0%, #e8d9cd 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 245, 235, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 40px rgba(120, 80, 50, 0.25),
+                        inset 2px 2px 5px rgba(255, 255, 255, 0.6),
+                        inset -3px -3px 8px rgba(150, 100, 70, 0.1);
+            border: 1px solid rgba(255, 235, 215, 0.7);
+        }
+        
+        /* 头部信息 - 班级学号姓名 */
+        .header-info {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #c9a787;
+        }
+        
+        .header-info h2 {
+            color: #7b4f3a;
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-size: 1.5rem;
+            background: #efdbcb;
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 50px;
+            box-shadow: inset 0 2px 5px #ffe2cf, 0 5px 10px rgba(160, 110, 70, 0.15);
+        }
+        
+        .header-info p {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #5e3e2b;
+            background: #f4e5d9;
+            padding: 12px;
+            border-radius: 40px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.03);
+        }
+        
+        .header-info strong {
+            color: #a95e3a;
+            font-weight: 600;
+            margin: 0 5px;
+        }
+        
+        /* 标题 */
+        h1 {
+            text-align: center;
+            color: #6b4226;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-shadow: 3px 3px 0 #fadbc3;
+            letter-spacing: 1px;
+        }
+        
+        /* 输入区域 */
+        .search-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        input {
+            flex: 2 1 250px;
+            padding: 18px 25px;
+            border: none;
+            background: #fffbf5;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            color: #3f2c1c;
+            box-shadow: inset 0 5px 10px #e6cfbb, 0 5px 15px rgba(170, 120, 70, 0.2);
+            transition: 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #cb9e7c;
+            background: #ffffff;
+        }
+        
+        input::placeholder {
+            color: #b9997a;
+            font-style: italic;
+        }
+        
+        button {
+            flex: 0 1 auto;
+            padding: 18px 40px;
+            background: #cc9b74;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fef7e9;
+            cursor: pointer;
+            box-shadow: 0 10px 0 #7b533a, 0 8px 20px #af7d5a;
+            transition: all 0.07s ease;
+            border: 1px solid #fad2b0;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            background: #d9ac86;
+            transform: translateY(-3px);
+            box-shadow: 0 13px 0 #7b533a, 0 12px 25px #b17e56;
+        }
+        
+        button:active {
+            transform: translateY(5px);
+            box-shadow: 0 5px 0 #7b533a, 0 8px 15px #a06d48;
+        }
+        
+        /* 图片展示区 */
+        .result {
+            text-align: center;
+            min-height: 300px;
+            background: rgba(243, 224, 205, 0.6);
+            border-radius: 80px 80px 40px 40px;
+            padding: 30px 20px;
+            box-shadow: inset 0 0 0 2px #fff9f0, inset 0 0 15px #edd6c2, 0 15px 25px rgba(110, 70, 40, 0.2);
+        }
+        
+        .fruit-name {
+            font-size: 2rem;
+            color: #5b3e2b;
+            margin-bottom: 20px;
+            font-weight: 500;
+            background: #fcf1e6;
+            display: inline-block;
+            padding: 8px 35px;
+            border-radius: 40px;
+            box-shadow: 0 4px 8px #bb9f89;
+        }
+        
+        .fruit-img {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 50px;
+            box-shadow: 0 20px 30px rgba(80, 45, 20, 0.3);
+            border: 6px solid #fae4d1;
+            background: #f7ede3;
+            object-fit: contain;
+        }
+        
+        .hint {
+            margin-top: 25px;
+            color: #946b4c;
+            font-style: italic;
+            background: #fff1e4;
+            padding: 10px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-size: 1.1rem;
+        }
+        
+        .hint i {
+            color: #b45f2e;
+            font-style: normal;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #b48a6a;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 班级学号姓名 -->
+        <div class="header-info">
+            <h2>🍎 水果识别器 🍌</h2>
+            <p>
+                <strong>班级：</strong>讯飞计科（5）班   |   
+                <strong>学号：</strong>2409060531   |   
+                <strong>姓名：</strong>全泳涛
+            </p>
+        </div>
+
+        <h1>🔍 你想看什么水果？</h1>
+        
+        <!-- 输入区域 -->
+        <div class="search-box">
+            <input type="text" id="fruitInput" placeholder="例如: 苹果  /  apple  /  香蕉  /  strawberry" value="苹果">
+            <button id="searchBtn">识别并显示</button>
+        </div>
+        
+        <!-- 结果显示区 -->
+        <div class="result" id="resultArea">
+            <div class="fruit-name" id="fruitNameDisplay">🍎 苹果</div>
+            <img id="fruitImage" class="fruit-img" src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop" alt="水果图片">
+            <div class="hint">💡 试试输入：苹果、香蕉、草莓、orange、grape……</div>
+        </div>
+    </div>
+
+    <script>
+        // 水果图片数据库 (关键词映射到图片URL)
+        const fruitDB = {
+            // 中文名称
+            '苹果': 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop',
+            '香蕉': 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&auto=format&fit=crop',
+            '草莓': 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&auto=format&fit=crop',
+            '橙子': 'https://images.unsplash.com/photo-1547514701-42782101795c?w=400&auto=format&fit=crop',
+            '葡萄': 'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400&auto=format&fit=crop',
+            '西瓜': 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&auto=format&fit=crop',
+            '芒果': 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&auto=format&fit=crop',
+            '梨': 'https://images.unsplash.com/photo-1595231741157-07bc3c9e3d5f?w=400&auto=format&fit=crop',
+            '桃子': 'https://images.unsplash.com/photo-1585476261230-8dfbc3f9f16a?w=400&auto=format&fit=crop',
+            '猕猴桃': 'https://images.unsplash.com/photo-1585059895524-72359a06133a?w=400&auto=format&fit=crop',
+            '柠檬': 'https://images.unsplash.com/photo-1581089778245-3ace676a770d?w=400&auto=format&fit=crop',
+            '樱桃': 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400&auto=format&fit=crop',
+            
+            // 英文名称 (映射到相同图片)
+            'apple': 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop',
+            'banana': 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&auto=format&fit=crop',
+            'strawberry': 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&auto=format&fit=crop',
+            'orange': 'https://images.unsplash.com/photo-1547514701-42782101795c?w=400&auto=format&fit=crop',
+            'grape': 'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400&auto=format&fit=crop',
+            'watermelon': 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&auto=format&fit=crop',
+            'mango': 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&auto=format&fit=crop',
+            'pear': 'https://images.unsplash.com/photo-1595231741157-07bc3c9e3d5f?w=400&auto=format&fit=crop',
+            'peach': 'https://images.unsplash.com/photo-1585476261230-8dfbc3f9f16a?w=400&auto=format&fit=crop',
+            'kiwi': 'https://images.unsplash.com/photo-1585059895524-72359a06133a?w=400&auto=format&fit=crop',
+            'lemon': 'https://images.unsplash.com/photo-1581089778245-3ace676a770d?w=400&auto=format&fit=crop',
+            'cherry': 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400&auto=format&fit=crop'
+        };
+
+        // 获取页面元素
+        const inputField = document.getElementById('fruitInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const fruitNameDisplay = document.getElementById('fruitNameDisplay');
+        const fruitImage = document.getElementById('fruitImage');
+
+        // 显示水果的函数
+        function showFruit(fruitKey) {
+            // 如果没有输入，默认显示苹果
+            if (!fruitKey || fruitKey.trim() === '') {
+                fruitKey = '苹果';
+            }
+            
+            // 转为小写用于英文匹配 (但保留原始输入用于显示)
+            const lowerKey = fruitKey.toLowerCase().trim();
+            
+            // 判断是否在数据库中存在 (先检查原词，再检查小写英文)
+            let imageUrl = fruitDB[fruitKey] || fruitDB[lowerKey];
+            
+            // 如果还是不存在，给一个默认图片
+            if (!imageUrl) {
+                imageUrl = 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop'; // 默认苹果
+                fruitNameDisplay.textContent = `❓ 未找到 "${fruitKey}"，显示苹果`;
+                fruitImage.src = imageUrl;
+                return;
+            }
+            
+            // 设置显示的水果名（首字母大写美化）
+            let displayName = fruitKey;
+            if (fruitKey.length > 0) {
+                displayName = fruitKey.charAt(0).toUpperCase() + fruitKey.slice(1);
+            }
+            
+            // 给中文名称加上小图标修饰（可选）
+            fruitNameDisplay.textContent = `🍒 ${displayName}`;
+            fruitImage.src = imageUrl;
+        }
+
+        // 绑定按钮点击事件
+        searchBtn.addEventListener('click', function() {
+            const fruit = inputField.value.trim();
+            showFruit(fruit);
+        });
+
+        // 绑定回车事件（在输入框按回车也能搜索）
+        inputField.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const fruit = inputField.value.trim();
+                showFruit(fruit);
+            }
+        });
+
+        // 初始化显示（默认显示苹果）
+        window.addEventListener('load', function() {
+            showFruit('苹果');
+        });
+    </script>
+</body>
+</html>
