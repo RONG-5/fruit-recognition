@@ -3,317 +3,456 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>水果识别器 - 全泳涛</title>
+    <title>遵义师范学院 · 百年学府 红色传承</title>
     <style>
+        /* 全局样式与响应式基础 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(145deg, #f8f0e7 0%, #e8d9cd 100%);
-            min-height: 100vh;
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: linear-gradient(135deg, #b22222, #8b1a1a);
+            color: white;
+            padding: 1rem 2rem;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            background-color: white;
+            color: #b22222;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .nav-links a:hover {
+            border-bottom: 2px solid #ffd966;
+            transform: translateY(-2px);
+        }
+
+        /* 英雄区 */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1986&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 8rem 2rem;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
-        
-        .container {
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+            margin-bottom: 1.5rem;
+            letter-spacing: 4px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
             max-width: 700px;
-            width: 100%;
-            background: rgba(255, 245, 235, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            padding: 40px 30px;
-            box-shadow: 0 25px 40px rgba(120, 80, 50, 0.25),
-                        inset 2px 2px 5px rgba(255, 255, 255, 0.6),
-                        inset -3px -3px 8px rgba(150, 100, 70, 0.1);
-            border: 1px solid rgba(255, 235, 215, 0.7);
-        }
-        
-        /* 头部信息 - 班级学号姓名 */
-        .header-info {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px dashed #c9a787;
-        }
-        
-        .header-info h2 {
-            color: #7b4f3a;
-            font-weight: 500;
-            letter-spacing: 1px;
-            font-size: 1.5rem;
-            background: #efdbcb;
-            display: inline-block;
-            padding: 8px 25px;
+            background: rgba(178, 34, 34, 0.7);
+            padding: 1rem 2rem;
             border-radius: 50px;
-            box-shadow: inset 0 2px 5px #ffe2cf, 0 5px 10px rgba(160, 110, 70, 0.15);
+            backdrop-filter: blur(5px);
+            margin-bottom: 2rem;
         }
-        
-        .header-info p {
-            margin-top: 15px;
+
+        .hero .subtitle {
             font-size: 1.2rem;
-            color: #5e3e2b;
-            background: #f4e5d9;
-            padding: 12px;
-            border-radius: 40px;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.03);
+            font-style: italic;
+            letter-spacing: 2px;
+            background: rgba(0,0,0,0.4);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
         }
-        
-        .header-info strong {
-            color: #a95e3a;
-            font-weight: 600;
-            margin: 0 5px;
+
+        /* 通用区块 */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
-        /* 标题 */
-        h1 {
+
+        .section-title {
             text-align: center;
-            color: #6b4226;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            text-shadow: 3px 3px 0 #fadbc3;
-            letter-spacing: 1px;
+            font-size: 2.5rem;
+            color: #b22222;
+            margin-bottom: 3rem;
+            position: relative;
+            font-weight: 700;
         }
-        
-        /* 输入区域 */
-        .search-box {
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #ffd966;
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* 简介卡片样式 */
+        .about-grid {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            flex: 1 1 300px;
+            border-left: 6px solid #b22222;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(178, 34, 34, 0.15);
+        }
+
+        .about-card h3 {
+            color: #b22222;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 18px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #ffd966;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            margin-bottom: 2.5rem;
+            position: relative;
+            background: white;
+            padding: 1.3rem 1.8rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: background 0.3s;
+        }
+
+        .timeline-item:hover {
+            background: #fffaf0;
+        }
+
+        .timeline-item::before {
+            content: attr(data-year);
+            position: absolute;
+            left: -60px;
+            top: 15px;
+            background: #b22222;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .timeline-item h4 {
+            color: #b22222;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 院系网格 */
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .dept-item {
+            background: white;
+            padding: 1.8rem 1rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+
+        .dept-item:hover {
+            border-bottom: 4px solid #b22222;
+            background: #fff5f5;
+            transform: scale(1.03);
+        }
+
+        /* 校园风光占位 - 使用美观占位图 */
+        .gallery {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery-item {
+            width: 280px;
+            height: 200px;
+            background-color: #ddd;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item span {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        /* 使用unsplash校园相关图片 */
+        .img1 { background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop'); }
+        .img2 { background-image: url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=2070&auto=format&fit=crop'); }
+        .img3 { background-image: url('https://images.unsplash.com/photo-1523050854058-8df90910e683?q=80&w=2070&auto=format&fit=crop'); }
+
+        /* 联系方式 */
+        .contact-info {
+            background: #b22222;
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 40px;
+            justify-content: space-around;
+            gap: 2rem;
+            margin-top: 2rem;
         }
-        
-        input {
-            flex: 2 1 250px;
-            padding: 18px 25px;
-            border: none;
-            background: #fffbf5;
-            border-radius: 60px;
-            font-size: 1.2rem;
-            color: #3f2c1c;
-            box-shadow: inset 0 5px 10px #e6cfbb, 0 5px 15px rgba(170, 120, 70, 0.2);
-            transition: 0.2s;
-            border: 2px solid transparent;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #cb9e7c;
-            background: #ffffff;
-        }
-        
-        input::placeholder {
-            color: #b9997a;
-            font-style: italic;
-        }
-        
-        button {
-            flex: 0 1 auto;
-            padding: 18px 40px;
-            background: #cc9b74;
-            border: none;
-            border-radius: 60px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #fef7e9;
-            cursor: pointer;
-            box-shadow: 0 10px 0 #7b533a, 0 8px 20px #af7d5a;
-            transition: all 0.07s ease;
-            border: 1px solid #fad2b0;
-            letter-spacing: 1px;
-        }
-        
-        button:hover {
-            background: #d9ac86;
-            transform: translateY(-3px);
-            box-shadow: 0 13px 0 #7b533a, 0 12px 25px #b17e56;
-        }
-        
-        button:active {
-            transform: translateY(5px);
-            box-shadow: 0 5px 0 #7b533a, 0 8px 15px #a06d48;
-        }
-        
-        /* 图片展示区 */
-        .result {
-            text-align: center;
-            min-height: 300px;
-            background: rgba(243, 224, 205, 0.6);
-            border-radius: 80px 80px 40px 40px;
-            padding: 30px 20px;
-            box-shadow: inset 0 0 0 2px #fff9f0, inset 0 0 15px #edd6c2, 0 15px 25px rgba(110, 70, 40, 0.2);
-        }
-        
-        .fruit-name {
-            font-size: 2rem;
-            color: #5b3e2b;
-            margin-bottom: 20px;
-            font-weight: 500;
-            background: #fcf1e6;
-            display: inline-block;
-            padding: 8px 35px;
-            border-radius: 40px;
-            box-shadow: 0 4px 8px #bb9f89;
-        }
-        
-        .fruit-img {
-            max-width: 100%;
-            max-height: 350px;
-            border-radius: 50px;
-            box-shadow: 0 20px 30px rgba(80, 45, 20, 0.3);
-            border: 6px solid #fae4d1;
-            background: #f7ede3;
-            object-fit: contain;
-        }
-        
-        .hint {
-            margin-top: 25px;
-            color: #946b4c;
-            font-style: italic;
-            background: #fff1e4;
-            padding: 10px 20px;
-            border-radius: 40px;
-            display: inline-block;
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
             font-size: 1.1rem;
         }
-        
-        .hint i {
-            color: #b45f2e;
-            font-style: normal;
-            font-weight: 600;
-        }
-        
+
         footer {
             text-align: center;
-            margin-top: 25px;
-            color: #b48a6a;
-            font-size: 1rem;
+            padding: 2rem;
+            background: #2c2c2c;
+            color: #ccc;
+            margin-top: 3rem;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            .timeline-item::before {
+                left: -50px;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 班级学号姓名 -->
-        <div class="header-info">
-            <h2>🍎 水果识别器 🍌</h2>
-            <p>
-                <strong>班级：</strong>讯飞计科（5）班   |   
-                <strong>学号：</strong>2409060531   |   
-                <strong>姓名：</strong>全泳涛
-            </p>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">遵</div>
+            <span>遵义师范学院</span>
         </div>
-
-        <h1>🔍 你想看什么水果？</h1>
-        
-        <!-- 输入区域 -->
-        <div class="search-box">
-            <input type="text" id="fruitInput" placeholder="例如: 苹果  /  apple  /  香蕉  /  strawberry" value="苹果">
-            <button id="searchBtn">识别并显示</button>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#about">学校简介</a>
+            <a href="#history">历史沿革</a>
+            <a href="#departments">院系设置</a>
+            <a href="#campus">校园风光</a>
+            <a href="#contact">联系方式</a>
         </div>
-        
-        <!-- 结果显示区 -->
-        <div class="result" id="resultArea">
-            <div class="fruit-name" id="fruitNameDisplay">🍎 苹果</div>
-            <img id="fruitImage" class="fruit-img" src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop" alt="水果图片">
-            <div class="hint">💡 试试输入：苹果、香蕉、草莓、orange、grape……</div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section class="hero" id="home">
+        <h1>遵义师范学院</h1>
+        <p>厚德树人 · 笃学致用</p>
+        <div class="subtitle">始于1907年 · 百年红色师范</div>
+    </section>
+
+    <!-- 学校简介 -->
+    <section class="section" id="about">
+        <h2 class="section-title">学校简介</h2>
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>🏛️ 历史底蕴</h3>
+                <p>遵义师范学院坐落于贵州省遵义市，前身为1907年创建的遵义初级师范学堂，历经贵州省立遵义师范学校、遵义师范专科学校等阶段，2001年经教育部批准升格为本科院校，是一所具有百年师范传统的省属普通本科高校。</p>
+            </div>
+            <div class="about-card">
+                <h3>🎓 办学定位</h3>
+                <p>学校坚持“立足遵义、服务贵州、面向全国”的办学定位，致力于培养高素质应用型人才，现有全日制在校生约1.5万人，设有18个二级学院，涵盖文学、理学、工学、教育学、管理学等学科门类。</p>
+            </div>
+            <div class="about-card">
+                <h3>🌟 红色传承</h3>
+                <p>根植于红色圣地遵义，学校将长征精神、遵义会议精神融入育人全过程，建有红色文化研究中心，形成了独特的红色育人办学特色，被誉为“红色教师的摇篮”。</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // 水果图片数据库 (关键词映射到图片URL)
-        const fruitDB = {
-            // 中文名称
-            '苹果': 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop',
-            '香蕉': 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&auto=format&fit=crop',
-            '草莓': 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&auto=format&fit=crop',
-            '橙子': 'https://images.unsplash.com/photo-1547514701-42782101795c?w=400&auto=format&fit=crop',
-            '葡萄': 'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400&auto=format&fit=crop',
-            '西瓜': 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&auto=format&fit=crop',
-            '芒果': 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&auto=format&fit=crop',
-            '梨': 'https://images.unsplash.com/photo-1595231741157-07bc3c9e3d5f?w=400&auto=format&fit=crop',
-            '桃子': 'https://images.unsplash.com/photo-1585476261230-8dfbc3f9f16a?w=400&auto=format&fit=crop',
-            '猕猴桃': 'https://images.unsplash.com/photo-1585059895524-72359a06133a?w=400&auto=format&fit=crop',
-            '柠檬': 'https://images.unsplash.com/photo-1581089778245-3ace676a770d?w=400&auto=format&fit=crop',
-            '樱桃': 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400&auto=format&fit=crop',
-            
-            // 英文名称 (映射到相同图片)
-            'apple': 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop',
-            'banana': 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&auto=format&fit=crop',
-            'strawberry': 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&auto=format&fit=crop',
-            'orange': 'https://images.unsplash.com/photo-1547514701-42782101795c?w=400&auto=format&fit=crop',
-            'grape': 'https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400&auto=format&fit=crop',
-            'watermelon': 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&auto=format&fit=crop',
-            'mango': 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&auto=format&fit=crop',
-            'pear': 'https://images.unsplash.com/photo-1595231741157-07bc3c9e3d5f?w=400&auto=format&fit=crop',
-            'peach': 'https://images.unsplash.com/photo-1585476261230-8dfbc3f9f16a?w=400&auto=format&fit=crop',
-            'kiwi': 'https://images.unsplash.com/photo-1585059895524-72359a06133a?w=400&auto=format&fit=crop',
-            'lemon': 'https://images.unsplash.com/photo-1581089778245-3ace676a770d?w=400&auto=format&fit=crop',
-            'cherry': 'https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400&auto=format&fit=crop'
-        };
+    <!-- 历史沿革 -->
+    <section class="section" id="history">
+        <h2 class="section-title">历史沿革</h2>
+        <div class="timeline">
+            <div class="timeline-item" data-year="1907">
+                <h4>遵义初级师范学堂</h4>
+                <p>在清末新政背景下创立，开启了黔北地区师范教育的先河。</p>
+            </div>
+            <div class="timeline-item" data-year="1936">
+                <h4>贵州省立遵义师范学校</h4>
+                <p>更名为省立师范，办学规模逐步扩大，为地方培养大量师资。</p>
+            </div>
+            <div class="timeline-item" data-year="1958">
+                <h4>遵义师范专科学校</h4>
+                <p>升格为专科院校，增设多个师范类专业，成为贵州基础教育师资的重要基地。</p>
+            </div>
+            <div class="timeline-item" data-year="2001">
+                <h4>遵义师范学院（本科）</h4>
+                <p>经教育部批准，升格为本科院校，开启综合性应用型办学新篇章。</p>
+            </div>
+            <div class="timeline-item" data-year="2019">
+                <h4>新增硕士学位授予立项建设单位</h4>
+                <p>学校入选贵州省硕士学位授予立项建设单位，办学层次迈向新台阶。</p>
+            </div>
+        </div>
+    </section>
 
-        // 获取页面元素
-        const inputField = document.getElementById('fruitInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const fruitNameDisplay = document.getElementById('fruitNameDisplay');
-        const fruitImage = document.getElementById('fruitImage');
+    <!-- 院系设置 -->
+    <section class="section" id="departments">
+        <h2 class="section-title">部分院系设置</h2>
+        <div class="department-grid">
+            <div class="dept-item">教师教育学院</div>
+            <div class="dept-item">人文与传媒学院</div>
+            <div class="dept-item">历史文化与旅游学院</div>
+            <div class="dept-item">外国语学院</div>
+            <div class="dept-item">数学学院</div>
+            <div class="dept-item">物理与电子科学学院</div>
+            <div class="dept-item">化学化工学院</div>
+            <div class="dept-item">生物与农业科技学院</div>
+            <div class="dept-item">信息工程学院</div>
+            <div class="dept-item">管理学院</div>
+            <div class="dept-item">音乐与舞蹈学院</div>
+            <div class="dept-item">美术学院</div>
+            <div class="dept-item">体育学院</div>
+            <div class="dept-item">马克思主义学院</div>
+            <div class="dept-item">继续教育学院</div>
+        </div>
+    </section>
 
-        // 显示水果的函数
-        function showFruit(fruitKey) {
-            // 如果没有输入，默认显示苹果
-            if (!fruitKey || fruitKey.trim() === '') {
-                fruitKey = '苹果';
-            }
-            
-            // 转为小写用于英文匹配 (但保留原始输入用于显示)
-            const lowerKey = fruitKey.toLowerCase().trim();
-            
-            // 判断是否在数据库中存在 (先检查原词，再检查小写英文)
-            let imageUrl = fruitDB[fruitKey] || fruitDB[lowerKey];
-            
-            // 如果还是不存在，给一个默认图片
-            if (!imageUrl) {
-                imageUrl = 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop'; // 默认苹果
-                fruitNameDisplay.textContent = `❓ 未找到 "${fruitKey}"，显示苹果`;
-                fruitImage.src = imageUrl;
-                return;
-            }
-            
-            // 设置显示的水果名（首字母大写美化）
-            let displayName = fruitKey;
-            if (fruitKey.length > 0) {
-                displayName = fruitKey.charAt(0).toUpperCase() + fruitKey.slice(1);
-            }
-            
-            // 给中文名称加上小图标修饰（可选）
-            fruitNameDisplay.textContent = `🍒 ${displayName}`;
-            fruitImage.src = imageUrl;
-        }
+    <!-- 校园风光 -->
+    <section class="section" id="campus">
+        <h2 class="section-title">校园风光</h2>
+        <div class="gallery">
+            <div class="gallery-item img1"><span>图书馆远眺</span></div>
+            <div class="gallery-item img2"><span>教学楼群</span></div>
+            <div class="gallery-item img3"><span>校园一隅</span></div>
+        </div>
+        <p style="text-align:center; margin-top:1.5rem; color:#666;">* 图片仅供展示，可替换为实际校园照片</p>
+    </section>
 
-        // 绑定按钮点击事件
-        searchBtn.addEventListener('click', function() {
-            const fruit = inputField.value.trim();
-            showFruit(fruit);
-        });
+    <!-- 联系方式 -->
+    <section class="section" id="contact">
+        <h2 class="section-title">联系我们</h2>
+        <div class="contact-info">
+            <div class="contact-item">📍 地址：贵州省遵义市新蒲新区平安大道</div>
+            <div class="contact-item">📞 电话：0851-2892XXXX</div>
+            <div class="contact-item">🌐 官网：www.zync.edu.cn</div>
+            <div class="contact-item">📧 邮箱：zync@zync.edu.cn</div>
+        </div>
+    </section>
 
-        // 绑定回车事件（在输入框按回车也能搜索）
-        inputField.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const fruit = inputField.value.trim();
-                showFruit(fruit);
-            }
-        });
-
-        // 初始化显示（默认显示苹果）
-        window.addEventListener('load', function() {
-            showFruit('苹果');
-        });
-    </script>
+    <footer>
+        <p>&copy; 2025 遵义师范学院介绍页面 | 红色圣地 · 百年师范</p>
+    </footer>
 </body>
 </html>
